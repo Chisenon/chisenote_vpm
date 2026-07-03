@@ -54,7 +54,7 @@
     const authorLink = document.getElementById('authorLink');
     if (data.author) {
       const authorName = typeof data.author === 'string' ? data.author : data.author.name || data.author;
-      const authorUrl = data.author.url || '#';
+      const authorUrl = data.author.url || 'https://github.com/' + authorName;
       authorLink.textContent = authorName;
       authorLink.href = authorUrl;
     }
