@@ -124,6 +124,23 @@ body {
   font-size: 0.75rem;
 }
 
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.btn-icon:hover {
+  color: var(--text);
+}
+
 .btn-primary {
   background: var(--accent);
   color: #fff;
