@@ -6,6 +6,9 @@
   <title>Chisenon VPM Packages</title>
   <meta name="description" content="Chisenon が公開している VRChat 向け VPM パッケージの一覧。VCC へ追加したり、各バージョンの .zip をダウンロードできます。">
   <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@spiritov/ds.css@2.6.1">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -24,9 +27,13 @@
       </div>
       <div class="top-body">
         <div class="top-info">
-          <div class="ds-clock" id="dsClock">--:--</div>
-          <div class="ds-date" id="dsDate">-------</div>
-          <div class="ds-date-full" id="dsDateFull">-------- --, ----</div>
+          <svg class="analog-clock" viewBox="0 0 100 100" aria-hidden="true">
+            <g id="clockMarks"></g>
+            <line class="hand hand-hour" id="clockHour" x1="50" y1="50" x2="50" y2="20" />
+            <line class="hand hand-min" id="clockMinute" x1="50" y1="50" x2="50" y2="12" />
+            <line class="hand hand-sec" id="clockSecond" x1="50" y1="50" x2="50" y2="8" />
+            <circle class="clock-cap" cx="50" cy="50" r="2.5" />
+          </svg>
         </div>
         <ds-calendar class="top-calendar" style="--color: var(--color-ds-blue)"></ds-calendar>
       </div>

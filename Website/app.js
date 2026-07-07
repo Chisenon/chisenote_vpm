@@ -241,14 +241,48 @@
     });
   }
 
+  function buildClockMarks() {
+    const g = document.getElementById('clockMarks');
+    if (!g) return;
+    const svgns = 'http://www.w3.org/2000/svg';
+    const cx = 50, cy = 50, R = 38;
+    const labels = { 0: '12', 3: '3', 6: '6', 9: '9' };
+    for (let k = 0; k < 12; k++) {
+      const ang = (k * 30 - 90) * Math.PI / 180;
+      const dx = R * Math.cos(ang);
+      const dy = R * Math.sin(ang);
+      const m = Math.max(Math.abs(dx), Math.abs(dy)) || 1;
+      const f = R / m;
+      const px = (cx + dx * f).toFixed(2);
+      const py = (cy + dy * f).toFixed(2);
+      if (labels[k]) {
+        const t = document.createElementNS(svgns, 'text');
+        t.setAttribute('x', px);
+        t.setAttribute('y', py);
+        t.setAttribute('class', 'clock-num');
+        t.textContent = labels[k];
+        g.appendChild(t);
+      } else {
+        const c = document.createElementNS(svgns, 'circle');
+        c.setAttribute('cx', px);
+        c.setAttribute('cy', py);
+        c.setAttribute('r', '2');
+        c.setAttribute('class', 'clock-dot');
+        g.appendChild(c);
+      }
+    }
+  }
+
   function updateClock() {
     function pad(n) { return String(n).padStart(2, '0'); }
+    const hourHand = document.getElementById('clockHour');
+    const minHand = document.getElementById('clockMinute');
+    const secHand = document.getElementById('clockSecond');
     function update() {
       const now = new Date();
       const hh = pad(now.getHours());
       const mm = pad(now.getMinutes());
       document.getElementById('barTime').textContent = hh + ':' + mm;
-      document.getElementById('dsClock').textContent = hh + ':' + mm;
 
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const months = [
@@ -270,25 +304,29 @@
       const date = now.getDate();
       document.getElementById('barDate').textContent = day + ' ' + month.short + ' ' + date;
 
-      document.getElementById('dsDate').textContent = month.short + ' ' + date;
-      document.getElementById('dsDateFull').textContent = month.full + ' ' + date + ', ' + now.getFullYear();
+      const sec = now.getSeconds();
+      const min = now.getMinutes();
+      const hr = now.getHours();
+      if (hourHand) hourHand.setAttribute('transform', 'rotate(' + ((hr % 12) * 30 + min * 0.5) + ' 50 50)');
+      if (minHand) minHand.setAttribute('transform', 'rotate(' + (min * 6 + sec * 0.1) + ' 50 50)');
+      if (secHand) secHand.setAttribute('transform', 'rotate(' + (sec * 6) + ' 50 50)');
     }
     update();
-    setInterval(update, 10000);
+    setInterval(update, 1000);
   }
 
   async function init() {
+    setupSearch();
+    setupActions();
+    setupDialog();
+    buildClockMarks();
+    updateClock();
+
     try {
       const data = await fetchListingData();
-
       const url = data.url || window.location.origin + '/index.json';
       document.getElementById('vccUrlField').value = url;
-
       renderPackages(data.packages || {});
-      setupSearch();
-      setupActions();
-      setupDialog();
-      updateClock();
     } catch (err) {
       document.getElementById('packageList').innerHTML = '<div class="package-entry" style="justify-content:center;color:#f88">Failed to load listing. Check console for details.</div>';
       console.error('Init error:', err);
