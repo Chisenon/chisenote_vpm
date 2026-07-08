@@ -116,10 +116,11 @@ body {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  padding: 8px 8px 4px;
-  padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+  padding: 4px;
+  padding-bottom: max(40px, calc(4px + env(safe-area-inset-bottom, 0px)));
   gap: 4px;
   overflow-y: auto;
+  position: relative;
 }
 
 .screen-bottom .pictochat-message,
@@ -151,7 +152,7 @@ body {
 }
 
 .msg-body {
-  padding: 6px 0;
+  padding: 3px 0;
   flex-shrink: 0;
 }
 
@@ -213,16 +214,25 @@ body {
   gap: 4px;
 }
 
-.package-entry {
+.package-entry.pictochat-message {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  color: #222;
+  text-shadow: none;
+  text-align: left;
+}
+
+.package-entry.pictochat-message > header {
+  margin-left: -4px;
+}
+
+.pkg-body {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  background: #2a2a2a;
-  border: 2px solid #444;
-  padding: 10px 12px;
-  margin: 0;
-  color: #fff;
+  padding: 0;
 }
 
 .pkg-info {
@@ -250,36 +260,26 @@ body {
 
 .pkg-actions .pkg-version {
   font-size: clamp(11px, 2.6vw, 13px);
-  color: #aaa;
+  color: #666;
   text-align: center;
-  border: 2px solid #444;
+  border: 2px solid #999;
   padding: 2px 6px;
-}
-
-.pkg-header {
-  display: flex;
-  align-items: center;
-}
-
-.pkg-name {
-  font-weight: bold;
-  font-size: clamp(13px, 3.5vw, 16px);
 }
 
 .pkg-desc {
   font-size: clamp(11px, 3vw, 13px);
-  color: #ccc;
+  color: #555;
   margin-top: 2px;
 }
 
 .pkg-id {
   font-size: clamp(10px, 2.4vw, 12px);
-  color: #999;
+  color: #888;
   margin-top: 1px;
 }
 
 @media (max-width: 480px) {
-  .package-entry {
+  .pkg-body {
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
@@ -323,6 +323,7 @@ body {
   color: #222;
   position: relative;
   padding-top: 36px;
+  width: 100%;
 }
 
 .ds-dialog .pictochat-message .pictochat-message {
@@ -420,4 +421,21 @@ body {
   color: #fff;
   text-shadow: 1px 1px 0 #000;
   letter-spacing: 0.5px;
+}
+
+.bottom-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.bottom-buttons button {
+  pointer-events: auto;
 }

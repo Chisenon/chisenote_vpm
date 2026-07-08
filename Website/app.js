@@ -89,26 +89,34 @@
     renderFilteredPackages();
   }
 
+  const DS_COLORS = [
+    'ds-slate', 'ds-maroon', 'ds-red', 'ds-pink', 'ds-orange',
+    'ds-yellow', 'ds-neonyellow', 'ds-lime', 'ds-green', 'ds-teal',
+    'ds-turquoise', 'ds-blue', 'ds-navy', 'ds-darkpurple', 'ds-magenta', 'ds-fuschia'
+  ];
+
   function createPackageEntry(pkg) {
     const v = pkg.version;
     const el = document.createElement('div');
-    el.className = 'package-entry';
+    el.className = 'package-entry pictochat-message';
     el.dataset.packageName = v.displayName || pkg.id;
     el.dataset.packageId = pkg.id;
 
+    const colorClass = DS_COLORS[Math.floor(Math.random() * DS_COLORS.length)] + '-50';
+
     el.innerHTML =
-      '<div class="pkg-info">' +
-        '<div class="pkg-header">' +
-          '<span class="pkg-name">' + escapeHtml(v.displayName || pkg.id) + '</span>' +
+      '<header class="' + colorClass + '">' + escapeHtml(v.displayName || pkg.id) + '</header>' +
+      '<div class="pkg-body">' +
+        '<div class="pkg-info">' +
+          '<div class="pkg-desc">' + escapeHtml(v.description || '') + '</div>' +
+          '<div class="pkg-id">' + escapeHtml(pkg.id) + '</div>' +
         '</div>' +
-        '<div class="pkg-desc">' + escapeHtml(v.description || '') + '</div>' +
-        '<div class="pkg-id">' + escapeHtml(pkg.id) + '</div>' +
-      '</div>' +
-      '<div class="pkg-actions">' +
-        '<button class="rowAddToVccButton ds-blue" data-package-id="' + escapeHtml(pkg.id) + '" title="Add to VCC">Add to VCC</button>' +
-        '<button class="rowPackageInfoButton" data-package-id="' + escapeHtml(pkg.id) + '" title="Info">Info</button>' +
-        '<button class="rowDownloadButton ds-slate" data-url="' + escapeHtml(v.url || '#') + '" title="Download ZIP">Download ZIP</button>' +
-        '<span class="pkg-version">v' + escapeHtml(v.version) + '</span>' +
+        '<div class="pkg-actions">' +
+          '<button class="rowAddToVccButton ds-blue" data-package-id="' + escapeHtml(pkg.id) + '" title="Add to VCC">Add to VCC</button>' +
+          '<button class="rowPackageInfoButton" data-package-id="' + escapeHtml(pkg.id) + '" title="Info">Info</button>' +
+          '<button class="rowDownloadButton ds-slate" data-url="' + escapeHtml(v.url || '#') + '" title="Download ZIP">Download ZIP</button>' +
+          '<span class="pkg-version">v' + escapeHtml(v.version) + '</span>' +
+        '</div>' +
       '</div>';
 
     return el;
@@ -267,7 +275,7 @@
       document.getElementById('vccUrlField').value = url;
       renderPackages(data.packages || {});
     } catch (err) {
-      document.getElementById('packageList').innerHTML = '<div class="package-entry" style="justify-content:center;color:#f88">Failed to load listing. Check console for details.</div>';
+      document.getElementById('packageList').innerHTML = '<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="alert"><div class="loading-container"><div class="loading-1"></div><div class="loading-2"></div><div class="loading-3"></div><div class="loading-4"></div><div class="loading-5"></div><div class="loading-6"></div><div class="loading-7"></div><div class="loading-8"></div><div class="loading-9"></div></div><span>Failed to load listing</span><div class="loading-container"><div class="loading-1"></div><div class="loading-2"></div><div class="loading-3"></div><div class="loading-4"></div><div class="loading-5"></div><div class="loading-6"></div><div class="loading-7"></div><div class="loading-8"></div><div class="loading-9"></div></div></div></div>';
       console.error('Init error:', err);
     }
   }
