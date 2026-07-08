@@ -1,6 +1,7 @@
 body {
   margin: 0;
   height: 100vh;
+  height: 100dvh;
   background-color: var(--color-ds-grid-bg, #e3e3e3);
   overflow: hidden;
 }
@@ -12,6 +13,7 @@ body {
   gap: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 
 .screen-top {
@@ -115,6 +117,7 @@ body {
   align-items: stretch;
   justify-content: flex-start;
   padding: 8px 8px 4px;
+  padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
   gap: 4px;
   overflow-y: auto;
 }
