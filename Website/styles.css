@@ -99,6 +99,7 @@ body {
   flex: 1;
   min-height: 0;
   padding: 4px 16px;
+  container-type: size;
 }
 
 .screen-bottom {
@@ -147,13 +148,14 @@ body {
 }
 
 .top-info {
+  --tile: min(44cqw, 88cqh, 200px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 2px;
-  width: min(234px, calc(35vh - 48px), 46vw);
-  height: min(234px, calc(35vh - 48px), 46vw);
+  width: var(--tile);
+  height: var(--tile);
   flex-shrink: 0;
   background: transparent;
   border: 2px solid #777;
@@ -161,10 +163,23 @@ body {
   box-sizing: border-box;
 }
 
-.top-calendar {
+.cal-wrap {
+  --tile: min(44cqw, 88cqh, 200px);
+  width: var(--tile);
+  height: var(--tile);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  width: min(234px, calc(35vh - 48px), 46vw);
-  height: min(234px, calc(35vh - 48px), 46vw);
+  overflow: hidden;
+}
+
+.top-calendar {
+  display: block;
+  width: 234px;
+  height: auto;
+  transform: scale(calc(var(--tile) / 234px));
+  transform-origin: center;
 }
 
 .analog-clock {
