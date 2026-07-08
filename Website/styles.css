@@ -29,10 +29,14 @@ body {
 }
 
 .bar-title {
-  font-size: 14px;
+  font-size: clamp(10px, 3vw, 14px);
   color: #fff;
   text-shadow: 1px 1px 0 #000;
   padding-left: 12px;
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bar-right {
@@ -121,6 +125,7 @@ body {
   text-align: center;
   margin: 0;
   flex-shrink: 0;
+  text-shadow: 1px 1px 0 #000;
 }
 
 .screen-bottom .input-wrapper {
@@ -150,17 +155,19 @@ body {
 .top-info {
   --tile: min(44cqw, 88cqh, 200px);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
   width: var(--tile);
   height: var(--tile);
   flex-shrink: 0;
-  background: transparent;
-  border: 2px solid #777;
-  padding: 4px;
-  box-sizing: border-box;
+}
+
+.top-info ds-clock {
+  display: block;
+  width: 194px;
+  height: 194px;
+  transform: scale(calc(var(--tile) / 194px));
+  transform-origin: center;
 }
 
 .cal-wrap {
@@ -180,48 +187,6 @@ body {
   height: auto;
   transform: scale(calc(var(--tile) / 234px));
   transform-origin: center;
-}
-
-.analog-clock {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.clock-num {
-  fill: #999;
-  font-family: 'DotGothic16', 'Courier New', monospace;
-  font-size: 18px;
-  font-weight: bold;
-  text-anchor: middle;
-  dominant-baseline: central;
-}
-
-.clock-dot {
-  fill: #222;
-}
-
-.hand {
-  stroke-linecap: butt;
-}
-
-.hand-hour {
-  stroke: #e53935;
-  stroke-width: 4;
-}
-
-.hand-min {
-  stroke: #0059f3;
-  stroke-width: 3;
-}
-
-.hand-sec {
-  stroke: #555;
-  stroke-width: 1.5;
-}
-
-.clock-cap {
-  fill: #222;
 }
 
 .btn-row {
@@ -264,19 +229,24 @@ body {
 
 .pkg-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, auto);
   gap: 3px;
   flex-shrink: 0;
+  justify-content: center;
   align-items: center;
 }
 
 .pkg-actions button {
-  font-size: 12px;
+  font-size: clamp(10px, 2.4vw, 13px);
+  width: clamp(88px, 22vw, 160px);
+  min-width: 0;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pkg-actions .pkg-version {
-  font-size: 12px;
+  font-size: clamp(11px, 2.6vw, 13px);
   color: #aaa;
   text-align: center;
   border: 2px solid #444;
@@ -290,19 +260,47 @@ body {
 
 .pkg-name {
   font-weight: bold;
-  font-size: 15px;
+  font-size: clamp(13px, 3.5vw, 16px);
 }
 
 .pkg-desc {
-  font-size: 13px;
+  font-size: clamp(11px, 3vw, 13px);
   color: #ccc;
   margin-top: 2px;
 }
 
 .pkg-id {
-  font-size: 11px;
+  font-size: clamp(10px, 2.4vw, 12px);
   color: #999;
   margin-top: 1px;
+}
+
+@media (max-width: 480px) {
+  .package-entry {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .pkg-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    gap: 4px;
+  }
+
+  .pkg-actions button {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+  }
+
+  .pkg-actions .pkg-version {
+    flex: 0 0 auto;
+  }
 }
 
 .ds-dialog {
@@ -409,7 +407,7 @@ body {
   flex-shrink: 0;
   width: 100%;
   border-width: 8px;
-  padding: 6px 0;
+  padding: 0 4px;
   box-sizing: border-box;
 }
 
